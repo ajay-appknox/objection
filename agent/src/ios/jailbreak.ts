@@ -14,37 +14,55 @@ import * as jobs from "../lib/jobs";
 const jailbreakPaths = [
   "/Applications/Cydia.app",
   "/Applications/FakeCarrier.app",
+  "/Applications/FlyJB.app",
   "/Applications/Icy.app",
   "/Applications/IntelliScreen.app",
   "/Applications/MxTube.app",
   "/Applications/RockApp.app",
+  "/Applications/SBSettings.app",
   "/Applications/SBSetttings.app",
+  "/Applications/Sileo.app",
+  "/Applications/Snoop-itConfig.app",
   "/Applications/WinterBoard.app",
+  "/Applications/Zebra.app",
   "/Applications/blackra1n.app",
+  "/Applications/loader.app",
+  "/Library/CoreServices/SystemVersion.plist",
+  "/Library/LaunchDaemons/com.ikey.bbot.plist",
+  "/Library/LaunchDaemons/com.saurik.Cydia.Startup.plist",
+  "/Library/MobileSubstrate/CydiaSubstrate.dylib",
   "/Library/MobileSubstrate/DynamicLibraries/LiveClock.plist",
   "/Library/MobileSubstrate/DynamicLibraries/Veency.plist",
   "/Library/MobileSubstrate/MobileSubstrate.dylib",
+  "/Library/PreferenceBundles/ABypassPrefs.bundle",
+  "/Library/PreferenceBundles/FlyJBPrefs.bundle",
+  "/Library/PreferenceBundles/LibertyPref.bundle",
+  "/Library/PreferenceBundles/ShadowPreferences.bundle",
   "/System/Library/LaunchDaemons/com.ikey.bbot.plist",
   "/System/Library/LaunchDaemons/com.saurik.Cy@dia.Startup.plist",
-  "/System/Library/LaunchDaemons/com.saurik.Cydia.Startup.plist",
   "/bin/bash",
   "/bin/sh",
   "/etc/apt",
   "/etc/ssh/sshd_config",
+  "/private/var/lib/apt",
+  "/private/var/lib/apt/",
+  "/private/var/lib/cydia",
+  "/private/var/mobile/Library/SBSettings/Themes",
   "/private/var/stash",
   "/private/var/tmp/cydia.log",
-  "/private/var/lib/apt",
   "/usr/bin/cycript",
   "/usr/bin/ssh",
   "/usr/bin/sshd",
   "/usr/libexec/sftp-server",
-  "/usr/libexec/sftp-server",
   "/usr/libexec/ssh-keysign",
+  "/usr/sbin/frida-server",
   "/usr/sbin/sshd",
+  "/var/binpack/Applications/loader.app",
   "/var/cache/apt",
   "/var/lib/cydia",
+  "/var/lib/dpkg/info/mobilesubstrate.md5sums",
   "/var/log/syslog",
-  "/var/tmp/cydia.log",
+  "/var/tmp/cydia.log"
 ];
 
 
@@ -300,6 +318,23 @@ export const disable = (): void => {
     identifier: jobs.identifier(),
     invocations: [],
     type: "ios-jailbreak-disable",
+  };
+
+  job.invocations.push(fileExistsAtPath(false, job.identifier));
+  job.invocations.push(libSystemBFork(false, job.identifier));
+  job.invocations.push(fopen(false, job.identifier));
+  job.invocations.push(canOpenURL(false, job.identifier));
+  job.invocations.push(jailMonkeyBypass(false, job.identifier));
+
+  jobs.add(job);
+};
+
+
+export const custom = (): void => {
+  const job: IJob = {
+    identifier: jobs.identifier(),
+    invocations: [],
+    type: "ios-jailbreak-custom",
   };
 
   job.invocations.push(fileExistsAtPath(false, job.identifier));

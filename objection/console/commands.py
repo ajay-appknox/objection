@@ -725,6 +725,10 @@ COMMANDS = {
                         'meta': 'Attempt to disable Jailbreak detection',
                         'exec': jailbreak.disable
                     },
+                    'custom': {
+                        'meta': 'Attempt to disable Jailbreak detection',
+                        'exec': jailbreak.custom
+                    },
                     'simulate': {
                         'meta': 'Attempt to simulate a Jailbroken environment',
                         'exec': jailbreak.simulate
